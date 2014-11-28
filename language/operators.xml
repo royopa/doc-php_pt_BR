@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: n/a Maintainer: felipe Status: ready -->
+ <chapter xml:id="language.operators" xmlns="http://docbook.org/ns/docbook">
+  <title>Operadores</title>
+  <simpara>
+   Um operador é algo que você alimenta com um ou mais valores (ou
+   expressões, no jargão de programação) e que devolve outro valor (e por isso
+   os próprios construtores se tormam expressões). Assim, você pode pensar que as funções
+   e os construtores que retornam valores (como o print) são operadores e os outros
+   que não retornam nada (como echo) como uma outra coisa.
+  </simpara>
+  <para>
+   Há três tipos de operadores. Primeiramente, os operadores unários, que
+   operam em apenas um valor. Por exemplo, ! (operador de negação) ou o ++
+   (operador de incremento). No segundo grupo estão os operadores binários, o
+   o grupo que contém a maioria dos operadores que o PHP suporta, com uma lista
+   completa logo abaixo na seção <link linkend="language.operators.precedence">Precedência
+   de operadores</link>.
+  </para>
+  <para>
+   O terceiro grupo é do operador ternário: ?:. Ele pode ser usado para selecionar
+   entre dois valores dependendo de uma terceira, em vez de selecionar duas
+   sentenças ou encadeamentos de execução. Englobar expressões ternárias com
+   parênteses é uma boa idéia.
+  </para>
+
+  <sect1 xml:id="language.operators.precedence">
+   <title>Precedência de Operadores</title>
+   <para>
+    A precedência de um operador especifica quem tem mais prioridade quando há
+    duas delas juntas. Por exemplo, na expressão, <literal>1 +
+    5 * 3</literal>, a resposta é <literal>16</literal> e não
+    <literal>18</literal> porque o operador de multiplicação ("*")
+    tem prioridade de precedência que o operador de adição ("+").
+    Parênteses podem ser utilizados para forçar a precedência, se necessário.
+    Assim, <literal>(1 + 5) * 3</literal> é avaliado como
+    <literal>18</literal>. Se a precedência do operador é igual, a associatividade
+    da esquerda para direita é usada.
+   </para>
+   <para>
+    A tabela seguinte mostra a precedência dos operadores, da maior
+    precedência no começo. Operadores com a mesma precedência estão na mesma linha,
+    no caso a associatividade deles decidide qual ordem eles são avaliados.
+    <table>
+     <title>Precedência dos operadores</title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Associação</entry>
+        <entry>Operador</entry>
+        <entry>Informação adicional</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>não associativo</entry>
+        <entry>clone new</entry>
+        <entry><link linkend="language.oop5.cloning">clone</link> e <link linkend="language.oop5.basic.new">new</link></entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>[</entry>
+        <entry><function>array</function></entry>
+       </row>
+       <row>
+        <entry>não associativo</entry>
+        <entry>++ --</entry>
+        <entry>
+         <link linkend="language.operators.increment">incremento/decremento</link>
+        </entry>
+       </row>
+       <row>
+        <entry>não associativo</entry>
+        <entry>~ - (int) (float) (string) (array) (object) (bool) @</entry>
+        <entry>
+         <link linkend="language.types">tipos</link>
+        </entry>
+       </row>
+       <row>
+        <entry>não associativo</entry>
+        <entry>instanceof</entry>
+        <entry>
+         <link linkend="language.types">tipos</link>
+        </entry>
+       </row>
+       <row>
+        <entry>direita</entry>
+        <entry>!</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>* / %</entry>
+        <entry>
+         <link linkend="language.operators.arithmetic">aritmético</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>+ - .</entry>
+        <entry>
+         <link linkend="language.operators.arithmetic">aritmético</link>&listendand;
+         <link linkend="language.operators.string">string</link></entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>&lt;&lt; &gt;&gt;</entry>
+        <entry>
+         <link linkend="language.operators.bitwise">Bit-a-bit</link>
+        </entry>
+       </row>
+       <row>
+        <entry>não associativo</entry>
+        <entry>&lt; &lt;= &gt; &gt;= &lt;&gt;</entry>
+        <entry>
+         <link linkend="language.operators.comparison">comparação</link>
+        </entry>
+       </row>
+       <row>
+        <entry>não associativo</entry>
+        <entry>== != === !==</entry>
+        <entry>
+         <link linkend="language.operators.comparison">comparação</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>&amp;</entry>
+        <entry>
+         <link linkend="language.operators.bitwise">Bit-a-bit</link>&listendand;
+         <link linkend="language.references">referências</link></entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>^</entry>
+        <entry>
+         <link linkend="language.operators.bitwise">Bit-a-bit</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>|</entry>
+        <entry>
+         <link linkend="language.operators.bitwise">Bit-a-bit</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>&amp;&amp;</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>||</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>? :</entry>
+        <entry>
+         <link linkend="language.operators.comparison.ternary">ternário</link>
+        </entry>
+       </row>
+       <row>
+        <entry>direita</entry>
+        <entry>
+         = += -= *= /= .= %= &amp;= |= ^= &lt;&lt;= &gt;&gt;=
+        </entry>
+        <entry>
+         <link linkend="language.operators.assignment">atribuição</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>and</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>xor</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>or</entry>
+        <entry>
+         <link linkend="language.operators.logical">lógico</link>
+        </entry>
+       </row>
+       <row>
+        <entry>esquerda</entry>
+        <entry>,</entry>
+        <entry>muitos usos</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+   <para>
+    Associatividade a esquerda significa que a expressão é avaliada da esquerda para direita,
+    associatividade a direita o oposto.
+    <example>
+     <title>Associatividade</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = 3 * 3 % 5; // (3 * 3) % 5 = 4
+$a = true ? 0 : true ? 1 : 2; // (true ? 0 : true) ? 1 : 2 = 2
+
+$a = 1;
+$b = 2;
+$a = $b += 3; // $a = ($b += 3) -> $a = 5, $b = 5
+?>
+]]>
+     </programlisting>
+    </example>
+    Use parênteses para aumenta a legibilidade do código.
+   </para>
+   <note>
+    <para>
+     Mesmo tendo <literal>=</literal> menor precedência que
+     que outros operadores, o PHP ainda permitirá expressões
+     similares à seguinte: <literal>if (!$a = foo())</literal>,
+     que no caso o retorno de <literal>foo()</literal> é
+     recebido em <varname>$a</varname>.
+    </para>
+   </note>
+  </sect1>
+
+  <sect1 xml:id="language.operators.arithmetic">
+   <title>Operadores Aritméticos</title>
+   <simpara>
+    Lembra-se da aritmética básica da escola? Estes operadores funcionam
+    exatamente como aqueles.
+   </simpara>
+   <table>
+    <title>Operadores Aritméticos</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>-$a</entry>
+       <entry>Negação</entry>
+       <entry>Oposto de $a.</entry>
+      </row>
+      <row>
+       <entry>$a + $b</entry>
+       <entry>Adição</entry>
+       <entry>Soma de $a e $b.</entry>
+      </row>
+      <row>
+       <entry>$a - $b</entry>
+       <entry>Subtração</entry>
+       <entry>Diferença entre $a e $b.</entry>
+      </row>
+      <row>
+       <entry>$a * $b</entry>
+       <entry>Multiplicação</entry>
+       <entry>Produto de $a e $b.</entry>
+      </row>
+      <row>
+       <entry>$a / $b</entry>
+       <entry>Divisão</entry>
+       <entry>Quociente de $a por $b.</entry>
+      </row>
+      <row>
+       <entry>$a % $b</entry>
+       <entry>Módulo</entry>
+       <entry>Resto de $a dividido por $b.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+    <simpara>
+    O operador de divisão ("/") sempre retorna um valor com ponto flutuante,
+    a não ser que os dois operados seja inteiros (ou strings que são convertidas para inteiros)
+    e numéros inteiramente divisíveis, em outro caso um inteiro é retornado.
+   </simpara>
+   <simpara>
+    Operandos de módulo são convertidos para inteiros (removendo a parte decimal) 
+    antes de processar.
+   </simpara>
+   <note>
+    <simpara>
+     O resto de <literal>$a % $b</literal> é negativo se <literal>$a</literal>
+     for negativo.
+    </simpara>
+   </note>
+   <simpara>
+    Veja também a página do manual
+    <link linkend="ref.math">funções matemáticas</link>.
+   </simpara>
+  </sect1>
+
+  <sect1 xml:id="language.operators.assignment">
+   <title>Operadores de Atribuição</title>
+   <simpara>
+    O operador básico de atribuição é "=". A sua primeira inclinação deve ser
+    a de pensar nisto como "é igual". Não. Isto quer dizer, na verdade, que o
+    operando da esquerda recebe o valor da expressão da direita (ou seja,
+    "é configurado para").
+   </simpara>
+   <para>
+    O valor de uma expressão de atribuição é o valor atribuído. Ou seja,
+    o valor de "$a = 3" é 3. Isto permite que você faça alguns
+    truques:
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$a = ($b = 4) + 5; // $a é igual a 9 agora e $b foi configurado como 4.
+
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Além do operador básico de atribuição, há "operadores
+    combinados" para todos os <link linkend="language.operators">operadores
+    aritméticos</link>, de array e string que permitem a você pegar um valor de uma
+    expressão e então usar seu próprio valor para o resultado daquela expressão. Por
+    exemplo:
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$a = 3;
+$a += 5; // configura $a para 8, como se disséssemos: $a = $a + 5;
+$b = "Bom ";
+$b .= "Dia!"; // configura $b para "Bom Dia!", como em $b = $b . "Dia!";
+
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Note que a atribuição copia a variável original para a nova
+    (atribuição por valor), assim a mudança de uma não afeta a
+    outra. Isto pode ter relevância se você precisa copiar algo
+    como uma grande matriz dentro de um loop longo. Atribuições
+    por referência é também suportada, usando a sintaxe <computeroutput>$var =
+    &amp;$outra_var;</computeroutput>. 
+    'Atribuição por referência' significa que ambas as variáveis
+    acabam apontando para os mesmos dados, e nada é copiado para lugar nenhum.
+    Para aprender mais sobre referências, leia <link
+    linkend="language.references">Referências explicadas</link>. No 
+    PHP 5, objetos são atribuídos por referência a menos que explícitamente feito
+    o contrário com a nova palavra chave <link linkend="language.oop5.cloning">clone</link>.
+   </para>
+  </sect1>
+
+  <sect1 xml:id="language.operators.bitwise">
+   <title>Operador Bit-a-bit</title>
+   <simpara>
+    Operadores bit-a-bit permitem que você acione ou desligue bits específicos dentro
+    de um inteiro. Se ambos os parâmetros da esquerda e da direita forem
+    strings, esses operadores irão trabalhar nos valores ASCII dos caracteres.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo 12 ^ 9; // Imprime '5'
+
+echo "12" ^ "9"; // Imprime o caracter de volta (backspace - ASCII 8)
+                 // ('1' (ASCII 49)) ^ ('9' (ASCII 57)) = #8
+
+echo "hallo" ^ "hello"; // Imprime os valores ASCII #0 #4 #0 #0 #0
+                        // 'a' ^ 'e' = #4
+
+echo 2 ^ "3"; // Imprime '1'
+// 2 ^ ((int)"3") == 1
+
+echo "2" ^ 3; // Imprime '1'
+// ((int)"2") ^ 3 == 1
+
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+
+   <table>
+    <title>Operadores Bit-a-bit</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a &amp; $b</entry>
+       <entry>E</entry>
+       <entry>Os bits que estão ativos tanto em $a quanto em $b são ativados.</entry>
+      </row>
+      <row>
+       <entry>$a | $b</entry>
+       <entry>OU</entry>
+       <entry>Os bits que estão ativos em $a ou em $b são ativados.</entry>
+      </row>
+      <row>
+       <entry>$a ^ $b</entry>
+       <entry>XOR</entry>
+       <entry>
+        Os bits que estão ativos em $a ou em $b, mas não em ambos, são ativados.
+       </entry>
+      </row>
+      <row>
+       <entry>~ $a</entry>
+       <entry>NÃO</entry>
+       <entry>
+        Os bits que estão ativos em $a não são ativados, e vice-versa.
+       </entry>
+      </row>
+      <row>
+       <entry>$a &lt;&lt; $b</entry>
+       <entry>Deslocamento à esquerda</entry>
+       <entry>
+        Desloca os bits de $a $b passos para a esquerda (cada passo significa
+        "multiplica por dois")
+       </entry>
+      </row>
+      <row>
+       <entry>$a &gt;&gt; $b</entry>
+       <entry>Deslocamento à direita</entry>
+       <entry>
+        Desloca os bits de $a $b passos para a direita (cada passo significa
+        "divide por dois")
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <warning>
+    <para>
+     Não desloque bits à direita maiores que 32 bits em sistemas 32 bits. E também
+     a esquerda no caso do resultado ser um número maior que 32 bits.
+    </para>
+   </warning>
+  </sect1>
+
+  <sect1 xml:id="language.operators.comparison">
+   <title>Operadores de Comparação</title>
+   <simpara>
+    Operadores de comparação, como os seus nomes implicam, permitem que você
+    compare dois valores. Você pode se interessar em ver
+    <link linkend="types.comparisons">as tabelas de comparação de tipos</link>,
+    que tem exemplo das várias comparações entre tipos relacionadas.
+   </simpara>
+   <table>
+    <title>Operadores de comparação</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a == $b</entry>
+       <entry>Igual</entry>
+       <entry>Verdadeiro (&true;) se $a é igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a === $b</entry>
+       <entry>Idêntico</entry>
+       <entry>
+        Verdadeiro (&true;) se $a é igual a $b, e eles são do mesmo
+        tipo (introduzido no PHP4).
+       </entry>
+      </row>
+      <row>
+       <entry>$a != $b</entry>
+       <entry>Diferente</entry>
+       <entry>Verdadeiro se $a não é igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;&gt; $b</entry>
+       <entry>Diferente</entry>
+       <entry>Verdadeiro se $a não é igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a !== $b</entry>
+       <entry>Não idêntico</entry>
+       <entry>
+        Verdadeiro de $a não é igual a $b, ou eles não são do mesmo
+        tipo (introduzido no PHP4).
+       </entry>
+      </row>
+      <row>
+       <entry>$a &lt; $b</entry>
+       <entry>Menor que</entry>
+       <entry>Verdadeiro se $a é estritamente menor que $b.</entry>
+      </row>
+      <row>
+       <entry>$a &gt; $b</entry>
+       <entry>Maior que</entry>
+       <entry>Verdadeiro se $a é estritamente maior que $b.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;= $b</entry>
+       <entry>Menor ou igual</entry>
+       <entry>Verdadeiro se $a é menor ou igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a &gt;= $b</entry>
+       <entry>Maior ou igual</entry>
+       <entry>Verdadeiro se $a é maior ou igual a $b.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    Se você comparar um inteiro com uma string, a string é
+    <link linkend="language.types.string.conversion">convertida para um número</link>.
+    Se você comparar 2 strings numéricas, elas serão comparadas como inteiras. Estas
+    regras também se aplicam ao comando
+    <link linkend="control-structures.switch">switch</link>.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(0 == "a"); // 0 == 0 -> true
+var_dump("1" == "01"); // 1 == 1 -> true
+var_dump("1" == "1e0"); // 1 == 1 -> true
+
+switch ("a") {
+case 0:
+    echo "0";
+    break;
+case "a": // nunca é alcançado porque "a" já foi combinado com 0
+    echo "a";
+    break;
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+
+   <para>
+    Para vários tipos, comparações são feitas de acordo com a seguinte
+    tabela (em ordem).
+   </para>
+   <table xml:id="language.operators.comparison.types">
+    <title>Comparação com vários tipos</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Tipo do 1º operando</entry>
+       <entry>Tipo do 2º operando</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry><type>null</type> ou <type>string</type></entry>
+       <entry><type>string</type></entry>
+       <entry>Converte &null; para "", numérico ou comparação léxica</entry>
+      </row>
+      <row>
+       <entry><type>bool</type> or <type>null</type></entry>
+       <entry>qualquer</entry>
+       <entry>Converte para <type>bool</type>, &false; &lt; &true;</entry>
+      </row>
+      <row>
+       <entry><type>object</type></entry>
+       <entry><type>object</type></entry>
+       <entry>Classes nativas podem definir como são comparadas, classes diferentes
+       são incomparáveis, mesma classe - compara propriedades igual faz arrays (PHP 4),
+       PHP 5 tem sua <link
+        linkend="language.oop5.object-comparison">explicação</link>
+       </entry>
+      </row>
+      <row>
+       <entry><type>string</type>, <type>resource</type> ou <type>number</type></entry>
+       <entry><type>string</type>, <type>resource</type> ou <type>number</type></entry>
+       <entry>Transforma strings e resources para números</entry>
+      </row>
+      <row>
+       <entry><type>array</type></entry>
+       <entry><type>array</type></entry>
+       <entry>Array com menos membros é menor, se a chave do operando 1 não é
+        encontrada no operando 2, então os arrays são incomparáveis, caso contrário - compara
+        valor por valor (veja o seguinte exemplo)</entry>
+      </row>
+      <row>
+       <entry><type>array</type></entry>
+       <entry>qualquer</entry>
+       <entry><type>array</type> é sempre maior</entry>
+      </row>
+      <row>
+       <entry><type>object</type></entry>
+       <entry>qualquer</entry>
+       <entry><type>object</type> é sempre maior</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    <example>
+     <title>Transcrição do padrão de comparação de array</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Arrays are compared like this with standard comparison operators
+function standard_array_compare($op1, $op2)
+{
+    if (count($op1) < count($op2)) {
+        return -1; // $op1 < $op2
+    } elseif (count($op1) > count($op2)) {
+        return 1; // $op1 > $op2
+    }
+    foreach ($op1 as $key => $val) {
+        if (!array_key_exists($key, $op2)) {
+            return null; // uncomparable
+        } elseif ($val < $op2[$key]) {
+            return -1;
+        } elseif ($val > $op2[$key]) {
+            return 1;
+        }
+    }
+    return 0; // $op1 == $op2
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Veja também <function>strcasecmp</function>,
+    <function>strcmp</function>,
+    <link linkend="language.operators.array">operadores de array</link>,
+    e a seção do manual sobre
+    <link linkend="language.types">Tipos</link>.
+   </para>
+
+   <sect2 xml:id="language.operators.comparison.ternary">
+    <title>Operador Ternário</title>
+    <para>
+     Outro operador condicional é o operador "?:" (ou ternário).
+     <example>
+      <title>Atribuindo um valor padrão</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// Example usage for: Ternary Operator
+$action = (empty($_POST['action'])) ? 'default' : $_POST['action'];
+
+// The above is identical to this if/else statement
+if (empty($_POST['action'])) {
+    $action = 'default';
+} else {
+    $action = $_POST['action'];
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+      A expressão <literal>(expr1) ? (expr2) : (expr3)</literal>
+      é avaliada para <replaceable>expr2</replaceable> se
+      <replaceable>expr1</replaceable> é avaliada como &true;, ou
+      <replaceable>expr3</replaceable> se
+      <replaceable>expr1</replaceable> é avaliada como &false;.
+    </para>
+    <note>
+     <simpara>
+      Note que o operador ternário é um comando, e ele não é
+      avaliado para uma variável, mas para o resultado do comando. Isto é
+      importante saber se você quer retornar uma variável por referência.
+      O  comando <literal>return $var == 42 ? $a : $b;</literal> em uma
+      função que retorna por referência conseqüêntemente não irá funcionar e será avisado
+      nas últimas versões do PHP.
+     </simpara>
+    </note>
+    <note>
+     <para>
+      É recomendado para evitar "stacking" de expressões ternárias. O
+      comportamento do PHP quando usando mais de um operador ternário no
+      único comando não é óbvio:
+      <example>
+       <title>Não-óbvio comportamento do ternário</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+// o seguinte aparenta imprimir 'true'
+echo (true?'true':false?'t':'f');
+
+// conteudo, a saída acima é 't'
+// isto por causa da expressão ternário se avaliada da esquerda pra direita
+
+// o seguinte é a versão mais óbvia do mesmo código acima
+echo ((true ? 'true' : 'false') ? 't' : 'f');
+
+// aqui, você pode ver que a primeira expressão é avaliada para 'true', que
+// por sua vez avalia para (bool)true, assim retornando a parte true da
+// segunda expressão ternária.
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+    </note>
+   </sect2>
+
+  </sect1>
+
+  <sect1 xml:id="language.operators.errorcontrol">
+   <title>Operadores de controle de erro</title>
+   <simpara>
+    O PHP suporta um operador de controle de erro: o sinal 'arroba' (@). Quando
+    ele precede uma expressão em PHP, qualquer mensagem de erro que possa ser
+    gerada por aquela expressão será ignorada.
+   </simpara>
+   <simpara>
+    Se o recurso <link linkend="ini.track-errors"><option>track_errors</option></link>
+    estiver habilitado, qualquer mensagem de erro gerada pela expressão
+    será gravada na variável <varname>$php_errormsg</varname>.
+    Esta variável será sobrescrita em cada erro, assim verifique-a constantemente
+    se você quiser usá-la.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+/* Erro de arquivo intencional */
+$my_file = @file ('arquivo_nao_existente') or
+    die ("Falha abrindo arquivo: '$php_errormsg'");
+
+// Isto funciona para qualquer expressão, não apenas para funções:
+$value = @$cache[$key];
+// você não receberá nenhum aviso se a chave $key não existir.
+
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <note>
+    <simpara>
+     O operador @ funciona somente em
+     <link linkend="language.expressions">expressões</link>. Uma regra simples para
+     lembrar disso: se você pode pegar o valor de alguma coisa, você pode prefixar
+     isso com o @. Assim, você pode prefixar chamadas de variáveis,
+     funções e <function>include</function>s, constantes e
+     afins. Você não pode prefixar definições de funções ou classe,
+     estruturas condicionais como o <literal>if</literal>,
+     <literal>foreach</literal> e assim por diante.
+    </simpara>
+   </note>
+   <simpara>
+    Veja também <function>error_reporting</function> e a seção do manual sobre
+    <link linkend="ref.errorfunc">funções de Manipulação de Erros e Logging</link>.
+   </simpara>
+   <note>
+    <para>
+     O prefixo de controle de erro "@" não desabilita mensagens
+     que são resultado de erros de interpretação (parse errors).
+    </para>
+   </note>
+   <warning>
+    <para>
+     Atualmente, o operador de controle de erro "@" sempre desativa
+     mensagens de erro, mesmo para erros críticos, que terminam a execução
+     de scripts. Além de outras coisas, isto significa que se você usar "@" para
+     suprimir erros de certas funções e elas não estiverem
+     disponíveis ou com tipos incorretos, o script vai parar exatamente aí
+     sem nenhuma indicação da razão.
+    </para>
+   </warning>
+  </sect1>
+
+  <sect1 xml:id="language.operators.execution">
+   <title>Operadores de Execução</title>
+   <para>
+    O PHP suporta um operador de execução: acentos graves (``). Note que
+    não são apóstrofes! O PHP tentará executar
+    o conteúdo dos acentos graves como um comando do shell; a saída será
+    retornada (isto é, ela não será simplesmente descarregada para a saída;
+    ela pode ser atribuída a uma variável). A utilização do operador contra-apóstrofo é idêntica
+    a função <function>shell_exec</function>.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$output = `ls -al`;
+echo "<pre>$output</pre>";
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <note>
+    <para>
+     O operador de execução fica desabilitado quando &safemode; está ativo
+     ou <function>shell_exec</function> está desabilitado.
+    </para>
+   </note>
+   <para>
+    Veja também a seção do manual sobre <link linkend="ref.exec">funções
+    de execução de programas</link>, <function>popen</function>
+    <function>proc_open</function> e
+    <link linkend="features.commandline">Utilizando o PHP em linha de
+    comando</link>.
+   </para>
+  </sect1>
+
+  <sect1 xml:id="language.operators.increment">
+   <title>Operadores de Incremento/Decremento</title>
+   <para>
+    O PHP suporta operadores de pré e pós-incremento e decremento
+    no estilo C.
+   </para>
+   <note>
+    <simpara>
+     Os operadores incremento/decremento não afetam valores booleanos.
+     Decrementando valores &null; não há efeito também, mas incrementando resulta
+     em <literal>1</literal>.
+    </simpara>
+   </note>
+   <table>
+    <title>Operadores de Incremento/Decremento</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Efeito</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>++$a</entry>
+       <entry>Pré-incremento</entry>
+       <entry>Incrementa $a em um, e então retorna $a.</entry>
+      </row>
+      <row>
+       <entry>$a++</entry>
+       <entry>Pós-incremento</entry>
+       <entry>Retorna $a, e então incrementa $a em um.</entry>
+      </row>
+      <row>
+       <entry>--$a</entry>
+       <entry>Pré-decremento</entry>
+       <entry>Decrementa $a em um, e então retorna $a.</entry>
+      </row>
+      <row>
+       <entry>$a--</entry>
+       <entry>Pós-decremento</entry>
+       <entry>Retorna $a, e então decrementa $a em um.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    Aqui está um script de exemplo simples:
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo "<h3>Pós-incremento</h3>";
+$a = 5;
+echo "Deve ser 5: " . $a++ . "<br />\n";
+echo "Deve ser 6: " . $a . "<br />\n";
+
+echo "<h3>Pré-incremento</h3>";
+$a = 5;
+echo "Deve ser 6: " . ++$a . "<br />\n";
+echo "Deve ser 6: " . $a . "<br />\n";
+
+echo "<h3>Pós-decremento</h3>";
+$a = 5;
+echo "Deve ser 5: " . $a-- . "<br />\n";
+echo "Deve ser 4: " . $a . "<br />\n";
+
+echo "<h3>Pré-decremento</h3>";
+$a = 5;
+echo "Deve ser 4: " . --$a . "<br />\n";
+echo "Deve ser 4: " . $a . "<br />\n";
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    O PHP segue a convenção Perl quando tratando operações aritmétricas
+    em variavéis caracter em vez da convenção C. Por exemplo, em Perl 'Z'+1 se torna
+    'AA', enquanto que no C 'Z'+1 se torna '[' ( ord('Z') == 90, ord('[') == 91 ).
+    Note que variáveis caracter podem ser incrementadas mas não decrementadas e
+    somente caracteres plain ASCII (a-z e A-Z) são suportados.
+    <example>
+     <title>Operações aritmétricas em variáveis caractere</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$i = 'W';
+for ($n=0; $n<6; $n++) {
+  echo ++$i . "\n";
+}
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+X
+Y
+Z
+AA
+AB
+AC
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Incrementar ou decrementar booleanos não há efeito.
+   </para>
+  </sect1>
+
+  <sect1 xml:id="language.operators.logical">
+   <title>Operadores Lógicos</title>
+
+   <table>
+    <title>Operadores Lógicos</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a and $b</entry>
+       <entry>E</entry>
+       <entry>Verdadeiro (&true;) se tanto $a quanto $b são verdadeiros.</entry>
+      </row>
+      <row>
+       <entry>$a or $b</entry>
+       <entry>OU</entry>
+       <entry>Verdadeiro se $a ou $b são verdadeiros.</entry>
+      </row>
+      <row>
+       <entry>$a xor $b</entry>
+       <entry>XOR</entry>
+       <entry>Verdadeiro se $a ou $b são verdadeiros, mas não ambos.</entry>
+      </row>
+      <row>
+       <entry>! $a</entry>
+       <entry>NÃO</entry>
+       <entry>Verdadeiro se $a não é verdadeiro.</entry>
+      </row>
+      <row>
+       <entry>$a &amp;&amp; $b</entry>
+       <entry>E</entry>
+       <entry>Verdadeiro se tanto $a quanto $b são verdadeiros.</entry>
+      </row>
+      <row>
+       <entry>$a || $b</entry>
+       <entry>OU</entry>
+       <entry>Verdadeiro se $a ou $b são verdadeiros.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <simpara>
+     A razão para as duas variantes dos operandos "and" e "or"
+     é que eles operam com precedências diferentes. (Veja
+     <link linkend="language.operators.precedence">Precedência
+     de Operadores</link>.)
+   </simpara>
+   <example>
+    <title>Ilustrando operadores lógicos</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// foo() nunca será chamada como estes operadores são short-circuit
+$a = (false && foo());
+$b = (true  || foo());
+$c = (false and foo());
+$d = (true  or  foo());
+
+// "||" tem maior precedência que "or"
+$e = false || true; // $e will be assigned to (false || true) which is true
+$f = false or true; // $f will be assigned to false
+var_dump($e, $f);
+
+// "&&" tem maior precedência que "and"
+$g = true && false; // $g will be assigned to (true && false) which is false
+$h = true and false; // $h will be assigned to true
+var_dump($g, $h);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+bool(true)
+bool(false)
+bool(false)
+bool(true)
+]]>
+    </screen>
+   </example>
+  </sect1>
+
+  <sect1 xml:id="language.operators.string">
+   <title>Operadores de String</title>
+   <simpara>
+    Há dois operadores de string. O primeiro é o operador de concatenação
+    ('.'), que retorna a concatenação dos seus argumentos direito e
+    esquerdo. O segundo é o operador de atribuição de concatenação
+    ('.='), que acrescenta o argumento do lado direito no
+    argumento do lado esquerdo. Veja em <link
+    linkend="language.operators.assignment">Operadores
+    de Atribuição </link> para mais informações.
+   </simpara>
+
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = "Olá ";
+$b = $a . "mundo!"; // agora $b contém "Olá mundo!"
+
+$a = "Olá ";
+$a .= "mundo!";     // agora $a contém "Olá mundo!"
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Veja também as seções do manual sobre o
+    <link linkend="language.types.string">tipo String</link> e as
+    <link linkend="ref.strings">funções de manipulação de Strings</link>.
+   </para>
+  </sect1>
+
+  <sect1 xml:id="language.operators.array">
+   <title>Operadores de Arrays</title>
+   <table>
+    <title>Operadores de array</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Exemplo</entry>
+       <entry>Nome</entry>
+       <entry>Resultado</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a + $b</entry>
+       <entry>União</entry>
+       <entry>União de $a e $b.</entry>
+      </row>
+      <row>
+       <entry>$a == $b</entry>
+       <entry>Igualdade</entry>
+       <entry>&true; se $a e $b tem os mesmos pares de chave/valor.</entry>
+      </row>
+      <row>
+       <entry>$a === $b</entry>
+       <entry>Identidade</entry>
+       <entry>&true; se $a e $b tem os mesmos pares de chave/valor 
+           na mesma ordem e do mesmo tipo.</entry>
+      </row>
+      <row>
+       <entry>$a != $b</entry>
+       <entry>Desigualdade</entry>
+       <entry>&true; se $a não é igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;&gt; $b</entry>
+       <entry>Desigualdade</entry>
+       <entry>&true; se $a não é igual a $b.</entry>
+      </row>
+      <row>
+       <entry>$a !== $b</entry>
+       <entry>Não identidade</entry>
+       <entry>&true; se $a não é identico a $b.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    O operador <literal>+</literal>
+    acrescenta os elementos da direita no array da esquerda, contudo,
+    chaves duplicadas NÃO são sobrescritas.
+   </para>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = array("a" => "maçã", "b" => "banana");
+$b = array("a" =>"pêra", "b" => "framboesa", "c" => "morango");
+
+$c = $a + $b; // Uniao de $a e $b
+echo "União de \$a e \$b: \n";
+var_dump($c);
+
+$c = $b + $a; // União de $b e $a
+echo "União de \$b e \$a: \n";
+var_dump($c);
+?>
+]]>
+     </programlisting>
+    </informalexample>
+    Quando executado, o script produz uma saída assim:
+    <screen role="php">
+<![CDATA[
+União de $a e $b:
+array(3) {
+  ["a"]=>
+  string(5) "maçã"
+  ["b"]=>
+  string(6) "banana"
+  ["c"]=>
+  string(6) "morango"
+}
+União de $b e $a:
+array(3) {
+  ["a"]=>
+  string(4) "pêra"
+  ["b"]=>
+  string(10) "framboesa"
+  ["c"]=>
+  string(6) "morango"
+}
+]]>
+    </screen>
+   </para>
+   <para>
+    Elementos do array são iguais para efeitos de comparação se eles possuem o mesmo
+    valor e chave.
+   </para>
+   <para>
+    <example>
+     <title>Comparando arrays</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = array("maçã", "banana");
+$b = array(1 => "banana", "0" => "maçã");
+
+var_dump($a == $b); // bool(true)
+var_dump($a === $b); // bool(false)
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Veja também as seções do manual sobre o
+    <link linkend="language.types.array">tipo Array</link> e
+    <link linkend="ref.array">funções de manipulação de Arrays</link>.
+   </para>
+  </sect1>
+  <sect1 xml:id="language.operators.type">
+   <title>Operadores de tipo</title>
+   <para>
+    <literal>instanceof</literal> é usado para determinar se um variável do PHP
+    é uma objeto instânciado de uma certa
+    <link linkend="language.oop5.basic.class">classe</link>:
+    <example>
+     <title>Usando instanceof com classes</title>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+class MyClass
+{
+}
+
+class NotMyClass
+{
+}
+$a = new MyClass;
+
+var_dump($a instanceof MyClass);
+var_dump($a instanceof NotMyClass);
+?>
+     ]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(false)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    <literal>instanceof</literal> pode também ser usado para determinar se uma variável
+    é um objeto instânciado de uma classe que herda de uma classe pai:
+    <example>
+     <title>Usando instanceof com herança</title>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+class ParentClass
+{
+}
+
+class MyClass extends ParentClass
+{
+}
+
+$a = new MyClass;
+
+var_dump($a instanceof MyClass);
+var_dump($a instanceof ParentClass);
+?>
+     ]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(true)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Para verificar se um objeto <emphasis>não</emphasis> é uma instância de uma classe, o
+    <link linkend="language.operators.logical">operador lógico <literal>not</literal>
+    </link> pode ser usado.
+    <example>
+     <title>Usando instanceof para verificar se o objeto <emphasis>não</emphasis> é uma
+      instância da classe</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class MyClass
+{
+}
+
+$a = new MyClass;
+var_dump(!($a instanceof stdClass));
+?>
+]]>
+     </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Por fim, <literal>instanceof</literal> pode também ser usado para determinar se
+    uma variável é um objeto instânciado de uma classe que implementa uma
+    <link linkend="language.oop5.interfaces">interface</link>:
+    <example>
+     <title>Usando instanceof para classe</title>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+interface MyInterface
+{
+}
+
+class MyClass implements MyInterface
+{
+}
+
+$a = new MyClass;
+
+var_dump($a instanceof MyClass);
+var_dump($a instanceof MyInterface);
+?>
+     ]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(true)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Embora <literal>instanceof</literal> é usualmente usado com um nome de classe literal,
+    ele pode também ser usado com outro objeto ou uma variável string:
+    <example>
+     <title>Usando instanceof com outras variáveis</title>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+interface MyInterface
+{
+}
+
+class MyClass implements MyInterface
+{
+}
+
+$a = new MyClass;
+$b = new MyClass;
+$c = 'MyClass';
+$d = 'NotMyClass';
+
+var_dump($a instanceof $b); // $b é umn objeto da classe MyClass
+var_dump($a instanceof $c); // $c é uma string 'MyClass'
+var_dump($a instanceof $d); // $d é uma string 'NotMyClass'
+?>
+     ]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(true)
+bool(false)
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Há algumas detalhes para estar ciente. Antes do PHP 5.1.0,
+    <literal>instanceof</literal> podia chamar <link linkend="language.oop5.autoload">__autoload()</link>
+    quando o nome da classe não existe. Em adicional, se a classe não foi carregada,
+    um erro fatal poderia ocorrer. Isto pode funcionar usando a <literal>dynamic
+    class reference</literal>, ou uma variável string contendo o nome da classe:
+    <example>
+     <title>Evitando que o nome da classe seje verificado e fatal erros com instanceof no PHP 5.0</title>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+$d = 'NotMyClass';
+var_dump($a instanceof $d); // não causa erro fatal
+?>
+     ]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(false)
+]]>
+     </screen>
+    </example>
+   </para>
+   <simpara>
+    O operador <literal>instanceof</literal> foi introduzido no PHP 5.
+    Antes disso <function>is_a</function> era usado mas
+    <function>is_a</function> tornou-se obsoleto pelo
+    <literal>instanceof</literal>.
+   </simpara>
+   <para>
+    Veja também <function>get_class</function> e
+    <function>is_a</function>.
+   </para>
+  </sect1>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
